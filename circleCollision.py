@@ -1,6 +1,7 @@
 import pygame
 from color import *
 from circle import *
+from level import *
 
 def main():
 	color = Color()
@@ -16,7 +17,7 @@ def main():
 	totalFrames = 0
 	done = False
 
-	circle = Circle(size)
+	level = Level(screen,size)
 
 	while not done:
 		for event in pygame.event.get():
@@ -24,16 +25,19 @@ def main():
 				done = True
 			elif event.type == pygame.MOUSEBUTTONDOWN:
 				mouseX, mouseY = event.pos
-				circle = Circle(size,mouseX,mouseY)
+				print mouseX, mouseY
+				level.mouseEvent(mouseX, mouseY, totalFrames)
+				#circle = Circle(size,mouseX,mouseY)
+				#circle = Circle(size)
 
 		screen.fill(color.LIGTGREY)
 
-		for c in Circle.circleList:
-			c.draw(screen)
+		level.update(FPS, totalFrames)
 
 		pygame.display.flip()
 
 		clock.tick(FPS)
+		totalFrames += 1
 
 if __name__ == "__main__":
 	main()
