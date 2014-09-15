@@ -111,6 +111,12 @@ def menuScreen(size,screen, options, topMargin, otherText = None):
 				rv = menu.key(event.key)
 				if rv != None:
 					return rv
+			elif event.type == pygame.MOUSEBUTTONDOWN:
+				rv = menu.mousePress()
+				if rv != None:
+					return rv
+		menu.mousePos(pygame.mouse.get_pos())
+
 		screen.fill(Color.LIGTGREY)
 		if (otherText != None):
 			otherTextPos = otherText.get_rect()

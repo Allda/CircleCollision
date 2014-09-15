@@ -16,6 +16,18 @@ class Menu(object):
 		self.selected = options.keys()[0]
 		self.fontSize = fontSize
 		self.font = pygame.font.Font(font,fontSize)
+		self.textAreas = []
+		self.getTextAreas()
+
+	def getTextAreas(self):
+		offset = 0
+		for key,val in self.options.items():
+			text = self.font.render(val,1,self.fontColor)
+			textPos = text.get_rect()
+			textPos.centerx = int(self.size[0]/2)
+			textPos.centery = self.topMargin+(offset*(self.fontSize+30))
+			offset += 1
+			self.textAreas.append(textPos)
 
 	def draw(self, screen):
 		offset = 0
@@ -43,3 +55,22 @@ class Menu(object):
 			return None
 		if(key == pygame.K_SPACE):
 			return self.selected
+
+	def mousePos(self, pos):
+		index = 0
+		for text in self.textAreas:
+			if(pos[0] > text.left and pos[0] < text.left+text.width):
+				if(pos[1] >text.top and pos[1] < text.top+text.height):
+					self.selected = index
+			index += 1
+
+	def mousePress(self):
+		index = 0
+		pos = pygame.mouse.get_pos()
+		for text in self.textAreas:
+			if(pos[0] > text.left and pos[0] < text.left+text.width):
+				if(pos[1] >text.top and pos[1] < text.top+text.height):
+					self.selected = index
+					return self.selected
+			index += 1
+		return None
