@@ -34,6 +34,8 @@ class Circle(object):
 		self.maxRadius = 40
 		self.speedx = random.randint(1,2) * random.choice([-1,1])
 		self.speedy = random.randint(1,2) * random.choice([-1,1])
+		self.font = pygame.font.Font("font/LEGO_BRIX.ttf",15)
+		self.score = 0
 		#self.speedx = 0
 	def getCenterCoord(self):
 		return (self.x + self.radius, self.y + self.radius)
@@ -66,41 +68,39 @@ class Circle(object):
 
 	def checkCollision(self):
 		count = 0
+		scoreAll = 0
 		for c in Circle.circleList:
 			if c.state == Circle.NORMAL:
 				dx = abs(self.x-c.x)
 				dy = abs(self.y-c.y)
 				if (math.sqrt(dx*dx+dy*dy) < (self.radius + c.radius)):
 					c.state = Circle.INCREASE
+					c.exp = self.exp+1
+					c.score = int(math.pow(2,self.exp))
+					scoreAll =+ c.score
 					count += 1
-		return count
+		return (count,scoreAll)
 
 
 
 	def draw(self, screen):
 		ck = (127, 33, 33)
-		size = 20
 		s = pygame.Surface((self.maxRadius*2,self.radius*2))
-
-		# first, "erase" the surface by filling it with a color and
-		# setting this color as colorkey, so the surface is empty
 		s.fill(ck)
 		s.set_colorkey(ck)
 
 		pygame.draw.circle(s, self.color, (self.radius,self.radius), self.radius)
 
-		# after drawing the circle, we can set the 
-		# alpha value (transparency) of the surface
 		s.set_alpha(200)
-
 		screen.blit(s, (self.x-self.radius, self.y-self.radius))
-		'''s = pygame.Surface((self.radius*2-1, self.radius*2+1))
-		s.fill((127,33,33))
-		s.set_colorkey((127,33,33))
-		pygame.draw.circle(s,self.color,(self.x,self.y),self.radius,2)
-		#s.set_alpha(75)
-		screen.blit(s,(self.x-self.radius,self.y-self.radius))
-		pygame.display.flip()
-		#pygame.draw.circle(screen,self.color,(self.x,self.y),self.radius)'''
+		if self.state == Circle.WAITING:
+
+			text = self.font.render("+"+str(self.score),1,Color.WHITE)
+
+			textPos = text.get_rect()
+			textPos.centerx = self.x
+			textPos.centery = self.y
+			screen.blit(text,textPos)
+
 
 

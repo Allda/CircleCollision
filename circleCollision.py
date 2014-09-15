@@ -29,7 +29,7 @@ def main():
 		1: "About",
 		2: "Exit"
 	}
-	rv = menuScreen(size, screen, options, 100)
+	rv = menuScreen(size, screen, options, 100, clock)
 	if rv == 2:
 		sys.exit()
 	if rv == 1:
@@ -64,14 +64,16 @@ def main():
 					1: "Exit"
 				}
 				loseStr = myBigfont.render("You Lose ",1,color.RED)
-				rv = menuScreen(size, screen, options, 200, loseStr)
+				rv = menuScreen(size, screen, options, 200,clock, loseStr)
 				if rv == 1:
 					sys.exit()
 				if rv == 0:
 					level.restartLevel(totalFrames)
 					userAction = False
 		collisonCount = myfont.render("Score: " + str(level.collision) +"/" +str(level.require),1,color.WHITE)
-		screen.blit(collisonCount, (30,50))
+		points = myfont.render("Points: " + str(level.score),1,color.WHITE)
+		screen.blit(collisonCount, (30,30))
+		screen.blit(points,(30,70))
 
 		level.draw(screen)
 
@@ -83,7 +85,7 @@ def main():
 				1: "Restart level",
 				2: "Exit"
 			}
-			rv = menuScreen(size, screen, options, 200, winStr)
+			rv = menuScreen(size, screen, options, 200,clock, winStr)
 			if rv == 2:
 				sys.exit()
 			if rv == 1:
@@ -99,7 +101,7 @@ def main():
 		clock.tick(FPS)
 		totalFrames += 1
 
-def menuScreen(size,screen, options, topMargin, otherText = None):
+def menuScreen(size,screen, options, topMargin, clock, otherText = None):
 	
 	menu = Menu(size,options,"font/LEGO_BRIX.ttf",50,(Color.BLACK,Color.GREY, Color.GREEN), topMargin)
 	while True:
@@ -125,6 +127,7 @@ def menuScreen(size,screen, options, topMargin, otherText = None):
 			screen.blit(otherText,otherTextPos)
 		menu.draw(screen)
 		pygame.display.flip()
+		clock.tick(30)
 
 if __name__ == "__main__":
 	main()

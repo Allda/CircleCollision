@@ -11,11 +11,12 @@ class Level(object):
 		self.size = size
 		self.circletCountList = []
 		self.requireList = []
-		self.level = 1
+		self.level = 10
 		self.loadDifficulty("level.dat")
 		self.base = 10
 		self.resetValues()
 		self.generateCircles(totalFrames)
+		self.score = 0
 
 
 	def loadDifficulty(self, filename):
@@ -33,11 +34,12 @@ class Level(object):
 		self.require = self.requireList[self.level-1]
 		self.state = Level.WAITING
 		self.collision = 0
+		self.score = 0
 
 
 	def mouseEvent(self,x,y, totalFrames):
 		if(self.state == Level.WAITING):
-			circle = Circle(self.size, x, y, totalFrames,5,Circle.INCREASE)
+			circle = Circle(self.size, x, y, totalFrames,3,Circle.INCREASE)
 			self.state = Level.INGAME
 		else:
 			pass
@@ -52,7 +54,9 @@ class Level(object):
 
 		for c in Circle.circleList:
 			if c.state == Circle.INCREASE or c.state == Circle.WAITING or c.state == Circle.DECREASE:
-				self.collision += c.checkCollision()
+				rv = c.checkCollision()
+				self.collision += rv[0]
+				self.score += rv[1]
 		end = True
 		for c in Circle.circleList:
 			if c.state == Circle.INCREASE or c.state == Circle.WAITING or c.state == Circle.DECREASE:
