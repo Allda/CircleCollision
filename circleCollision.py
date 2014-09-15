@@ -52,7 +52,6 @@ def main():
 					userAction = False
 				else:
 					mouseX, mouseY = event.pos
-					print mouseX, mouseY
 					level.mouseEvent(mouseX, mouseY, totalFrames)
 					#circle = Circle(size,mouseX,mouseY)
 					#circle = Circle(size)
@@ -61,10 +60,9 @@ def main():
 		if not userAction:
 			rv = level.update(FPS, totalFrames)
 			if(rv == Level.LOSE):
-				print "You Lose game"
 				userAction = True
 				options = {
-					0: "Next level",
+					0: "Retry",
 					1: "Exit"
 				}
 				loseStr = myBigfont.render("You Lose ",1,color.RED)

@@ -9,15 +9,30 @@ class Level(object):
 	def __init__(self, screen, size, totalFrames):
 		self.screen =screen
 		self.size = size
+		self.circletCountList = []
+		self.requireList = []
+		self.level = 1
+		self.loadDifficulty("level.dat")
 		self.base = 10
 		self.resetValues()
-		self.level = 1
 		self.generateCircles(totalFrames)
 
 
+	def loadDifficulty(self, filename):
+		data = open(filename, 'r')
+		for line in data:
+			splited = line.strip().split("-")
+			print splited
+			self.requireList.append(int(splited[0]))
+			self.circletCountList.append(int(splited[1]))
+
+
 	def resetValues(self):
-		self.circletCount = int(math.log(self.base,2)*10)
-		self.require = int(self.circletCount*(0.1*math.log(self.base,2)))
+		'''self.circletCount = int(math.log(self.base,2)*10)
+		self.require = int(self.circletCount*(0.02*math.log(self.base,2)))'''
+		print self.level
+		self.circletCount = self.circletCountList[self.level-1]
+		self.require = self.requireList[self.level-1]
 		self.state = Level.WAITING
 		self.collision = 0
 
@@ -40,7 +55,11 @@ class Level(object):
 		for c in Circle.circleList:
 			if c.state == Circle.INCREASE or c.state == Circle.WAITING or c.state == Circle.DECREASE:
 				self.collision += c.checkCollision()
-		if self.require <= self.collision:
+		end = True
+		for c in Circle.circleList:
+			if c.state == Circle.INCREASE or c.state == Circle.WAITING or c.state == Circle.DECREASE:
+				end = False
+		if self.require <= self.collision and end:
 			return Level.WIN
 		if (self.checkLose()):
 			return Level.LOSE
