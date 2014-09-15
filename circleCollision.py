@@ -45,10 +45,8 @@ def main():
 				if userAction:
 					if rv == Level.WIN:
 						level.nextLevel(totalFrames)
-						print "Next Level"
 					elif rv == Level.LOSE:
 						level.restartLevel(totalFrames)
-						print "Retry"
 					userAction = False
 				else:
 					mouseX, mouseY = event.pos

@@ -22,7 +22,6 @@ class Level(object):
 		data = open(filename, 'r')
 		for line in data:
 			splited = line.strip().split("-")
-			print splited
 			self.requireList.append(int(splited[0]))
 			self.circletCountList.append(int(splited[1]))
 
@@ -30,7 +29,6 @@ class Level(object):
 	def resetValues(self):
 		'''self.circletCount = int(math.log(self.base,2)*10)
 		self.require = int(self.circletCount*(0.02*math.log(self.base,2)))'''
-		print self.level
 		self.circletCount = self.circletCountList[self.level-1]
 		self.require = self.requireList[self.level-1]
 		self.state = Level.WAITING

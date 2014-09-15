@@ -42,5 +42,4 @@ class Menu(object):
 				self.selected = self.count -1
 			return None
 		if(key == pygame.K_SPACE):
-			print "return " + str(self.selected)
 			return self.selected
