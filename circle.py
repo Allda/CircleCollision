@@ -37,7 +37,7 @@ class Circle(object):
 		return (self.x + self.radius, self.y + self.radius)
 
 	def update(self, FPS, totalFrames):
-		print self.state
+
 		if(self.state == Circle.NORMAL):
 			self.x += self.speedx
 			self.y += self.speedy
@@ -77,5 +77,5 @@ class Circle(object):
 
 	def draw(self, screen):
 		pygame.draw.circle(screen,self.color,(self.x,self.y),self.radius)
-		
+
 
