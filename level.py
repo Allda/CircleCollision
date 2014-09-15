@@ -37,7 +37,7 @@ class Level(object):
 
 	def mouseEvent(self,x,y, totalFrames):
 		if(self.state == Level.WAITING):
-			circle = Circle(self.size, x, y, totalFrames,Circle.INCREASE)
+			circle = Circle(self.size, x, y, totalFrames,5,Circle.INCREASE)
 			self.state = Level.INGAME
 		else:
 			pass
