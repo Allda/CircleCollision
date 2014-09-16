@@ -90,6 +90,7 @@ class Level(object):
 
 	def restartLevel(self,totalFrames):
 		self.state = Level.WAITING
+		self.resetValues()
 		self.collision = 0
 		Circle.circleList[:] = []
 		self.generateCircles(totalFrames)

@@ -86,6 +86,7 @@ def main():
 				2: "Exit"
 			}
 			rv = menuScreen(size, screen, options, 200,clock, winStr)
+			
 			if rv == 2:
 				sys.exit()
 			if rv == 1:
